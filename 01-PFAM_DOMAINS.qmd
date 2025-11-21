@@ -1,0 +1,347 @@
+---
+title: "PFAM Domains in OmniEff Pipeline"
+---
+
+# PFAM Domains in OmniEff Pipeline
+
+This document lists the specific PFAM domains used by the OmniEff pipeline for effector prediction. These domains were selected based on their relevance to effector proteins and pathogenicity factors.
+
+## Source Information
+
+- **PFAM Version**: 34.0 (released in 2020)
+- **Total Domains**: 305 domains
+- **Location**: `lib/pfams/` directory
+- **Format**: HMM files (`.hmm` extension)
+
+## Domain List
+
+The following 305 PFAM domains are used in the pipeline:
+
+- PF00014.25
+- PF00030.21
+- PF00059.23
+- PF00068.21
+- PF00087.23
+- PF00160.23
+- PF00161.21
+- PF00187.21
+- PF00188.28
+- PF00200.25
+- PF00293.30
+- PF00314.19
+- PF00331.22
+- PF00451.21
+- PF00457.19
+- PF00537.20
+- PF00545.22
+- PF00555.21
+- PF00652.24
+- PF00704.30
+- PF00706.19
+- PF00734.20
+- PF00819.19
+- PF00964.19
+- PF01083.24
+- PF01117.22
+- PF01123.22
+- PF01324.21
+- PF01335.23
+- PF01338.20
+- PF01363.23
+- PF01375.19
+- PF01376.20
+- PF01421.21
+- PF01476.22
+- PF01522.23
+- PF01607.26
+- PF01670.18
+- PF01742.19
+- PF01764.27
+- PF01821.20
+- PF02048.18
+- PF02128.17
+- PF02221.17
+- PF02258.18
+- PF02452.19
+- PF02691.17
+- PF02763.16
+- PF02764.16
+- PF02794.18
+- PF02819.17
+- PF02876.19
+- PF02917.16
+- PF02918.17
+- PF02950.19
+- PF03077.16
+- PF03211.15
+- PF03318.15
+- PF03330.20
+- PF03377.15
+- PF03440.16
+- PF03443.16
+- PF03495.16
+- PF03497.18
+- PF03498.16
+- PF03505.16
+- PF03507.15
+- PF03768.17
+- PF03769.17
+- PF03784.15
+- PF03944.16
+- PF03945.16
+- PF04126.15
+- PF04221.14
+- PF04365.15
+- PF04829.15
+- PF05015.15
+- PF05016.17
+- PF05294.15
+- PF05353.13
+- PF05374.14
+- PF05394.13
+- PF05453.14
+- PF05627.13
+- PF05630.13
+- PF05638.14
+- PF05707.14
+- PF05730.13
+- PF05791.13
+- PF05819.13
+- PF05932.15
+- PF06254.13
+- PF06255.15
+- PF06261.13
+- PF06286.13
+- PF06296.14
+- PF06340.13
+- PF06357.13
+- PF06414.14
+- PF06416.14
+- PF06451.13
+- PF06453.13
+- PF06457.13
+- PF06602.16
+- PF06755.14
+- PF06766.13
+- PF06769.16
+- PF07249.14
+- PF07254.14
+- PF07365.14
+- PF07442.13
+- PF07473.13
+- PF07504.15
+- PF07591.13
+- PF07648.17
+- PF07737.13
+- PF07740.14
+- PF07771.13
+- PF07822.13
+- PF07829.13
+- PF07906.15
+- PF07927.14
+- PF07936.14
+- PF07945.13
+- PF07951.14
+- PF07952.14
+- PF07953.14
+- PF07968.14
+- PF08024.13
+- PF08025.13
+- PF08086.13
+- PF08087.13
+- PF08088.14
+- PF08089.13
+- PF08090.13
+- PF08091.13
+- PF08092.13
+- PF08093.13
+- PF08094.13
+- PF08095.13
+- PF08096.13
+- PF08097.13
+- PF08098.13
+- PF08099.13
+- PF08104.13
+- PF08115.13
+- PF08116.13
+- PF08119.13
+- PF08120.13
+- PF08121.13
+- PF08131.13
+- PF08178.13
+- PF08249.13
+- PF08251.13
+- PF08396.12
+- PF08493.12
+- PF08562.12
+- PF08843.13
+- PF08845.12
+- PF08888.13
+- PF08995.12
+- PF09009.12
+- PF09075.12
+- PF09101.12
+- PF09102.12
+- PF09119.12
+- PF09131.12
+- PF09156.12
+- PF09207.13
+- PF09275.12
+- PF09276.12
+- PF09407.12
+- PF09461.12
+- PF09857.11
+- PF09907.11
+- PF10231.11
+- PF10279.11
+- PF10530.11
+- PF10550.11
+- PF11047.10
+- PF11327.10
+- PF11410.10
+- PF11529.10
+- PF11584.10
+- PF11592.10
+- PF11663.10
+- PF11807.10
+- PF12207.10
+- PF12255.10
+- PF12256.10
+- PF12563.10
+- PF12703.9
+- PF12918.9
+- PF13304.8
+- PF13933.8
+- PF13939.8
+- PF13940.8
+- PF13955.8
+- PF13956.8
+- PF13957.8
+- PF13958.8
+- PF13979.8
+- PF13981.8
+- PF14021.8
+- PF14113.8
+- PF14171.8
+- PF14200.8
+- PF14449.8
+- PF14521.8
+- PF14856.8
+- PF14866.8
+- PF15500.8
+- PF15520.8
+- PF15521.8
+- PF15522.8
+- PF15523.8
+- PF15524.8
+- PF15526.8
+- PF15527.8
+- PF15528.8
+- PF15529.8
+- PF15530.8
+- PF15531.8
+- PF15532.8
+- PF15533.8
+- PF15534.8
+- PF15535.8
+- PF15536.8
+- PF15537.8
+- PF15538.8
+- PF15540.8
+- PF15541.8
+- PF15542.8
+- PF15543.8
+- PF15544.8
+- PF15545.8
+- PF15604.8
+- PF15605.8
+- PF15606.8
+- PF15607.8
+- PF15635.8
+- PF15636.8
+- PF15637.8
+- PF15638.8
+- PF15639.8
+- PF15640.8
+- PF15641.8
+- PF15643.8
+- PF15644.8
+- PF15645.8
+- PF15646.8
+- PF15647.8
+- PF15648.8
+- PF15649.8
+- PF15650.8
+- PF15651.8
+- PF15652.8
+- PF15653.8
+- PF15657.8
+- PF15658.8
+- PF15659.8
+- PF15723.7
+- PF15738.7
+- PF15781.7
+- PF15935.7
+- PF16073.7
+- PF16361.7
+- PF16536.7
+- PF16541.7
+- PF16542.7
+- PF16754.7
+- PF16810.7
+- PF16829.7
+- PF16847.7
+- PF16873.7
+- PF16981.7
+- PF17056.7
+- PF17454.4
+- PF17475.4
+- PF17476.4
+- PF17486.4
+- PF17491.4
+- PF17492.4
+- PF17499.4
+- PF17521.4
+- PF17556.4
+- PF17557.4
+- PF17563.4
+- PF17997.3
+- PF18022.3
+- PF18050.3
+- PF18078.3
+- PF18224.3
+- PF18241.3
+- PF18247.3
+- PF18276.3
+- PF18449.3
+- PF18488.3
+- PF18634.3
+- PF18648.3
+- PF18661.3
+- PF18807.3
+- PF18973.2
+- PF19271.1
+
+## Domain Categories
+
+This is a curated set of 305 PFAM domains that were selected by the [Predector pipeline](https://github.com/ccdmb/predector), from which the OmniEff pipeline is derived. These domains were chosen based on their relevance to effector protein prediction and pathogenicity analysis in the original Predector implementation.
+
+## Usage in Pipeline
+
+The PFAM domains are used in the `run_pfam_scan` rule to:
+1. Create a combined HMM database from all domain files
+2. Scan input proteins against this database using `hmmscan`
+3. Identify proteins with matches to effector-associated domains
+4. Contribute to the scoring algorithm (see `SCORING.md`)
+
+## Version Information
+
+- **PFAM Version**: 34.0 (released in 2020)
+- **Total Domains**: 305 domains
+- **File Format**: HMM files compatible with HMMER3
+
+## References
+
+- **PFAM Database**: [https://pfam.xfam.org/](https://pfam.xfam.org/)
+- **HMMER**: [http://hmmer.org/](http://hmmer.org/)
+- **PFAM 34.0 Release Notes**: [https://pfam.xfam.org/release_notes](https://pfam.xfam.org/release_notes) 

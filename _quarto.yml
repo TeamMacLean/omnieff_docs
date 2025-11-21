@@ -1,0 +1,33 @@
+project:
+  type: website
+  output-dir: _site
+  render:
+    - "*.qmd"
+    - "!*.md"
+
+website:
+  title: "OmniEff Documentation"
+  page-navigation: true
+  description: "Documentation for the OmniEff effector prediction pipeline"
+  navbar:
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "PFAM Domains"
+        href: 01-PFAM_DOMAINS.qmd
+      - text: "Scoring"
+        href: 02-SCORING.qmd
+      - text: "About"
+        href: about.qmd
+    right:
+      - icon: github
+        href: https://github.com/TeamMacLean/omnieff_docs
+
+format:
+  html:
+    smooth-scroll: true
+    anchor-sections: true
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3

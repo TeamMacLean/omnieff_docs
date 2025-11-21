@@ -1,0 +1,40 @@
+---
+title: "About"
+---
+
+## About OmniEff
+
+OmniEff is a Snakemake-based bioinformatics pipeline developed for predicting effector proteins from genomic assemblies.
+
+### Pipeline Origin
+
+This pipeline is derived from the [Predector pipeline](https://github.com/ccdmb/predector), which provides a comprehensive framework for effector prediction. OmniEff adapts and extends this approach for use on HPC systems.
+
+### Key Features
+
+- **Comprehensive Analysis**: Integrates 10+ prediction tools for signal peptides, subcellular localization, and effector identification
+- **Custom Scoring**: Implements a weighted scoring algorithm to rank candidate effectors
+- **PFAM Domain Analysis**: Uses 305 curated PFAM domains associated with pathogenicity
+- **HPC Optimized**: Designed for SLURM-based HPC systems with Singularity container support
+
+### Tools Integrated
+
+The pipeline incorporates the following bioinformatics tools:
+
+- SignalP (v3, v4, v5, v6)
+- EffectorP (v1, v2, v3)
+- DeepRedEff
+- LOCALIZER
+- ApoplastP
+- TargetP
+- TMHMM
+- Phobius
+- HMMER (for PFAM scanning)
+
+### Development
+
+Developed by the Bioinformatics team at The Sainsbury Laboratory (TSL).
+
+### Contact
+
+For questions, issues, or feature requests, please contact the TSL bioinformatics team or open an issue on the GitHub repository.

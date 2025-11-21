@@ -1,0 +1,322 @@
+# OmniEff - Effector Prediction Pipeline
+
+OmniEff is a comprehensive Snakemake-based pipeline for predicting effector proteins from genomic assemblies. The pipeline integrates multiple prediction tools including SignalP, EffectorP, DeepRedEff, and others to provide a comprehensive analysis of potential effector proteins.
+
+## Quick Start (TSL HPC - Installed Version)
+
+If OmniEff is already installed on your system, you can start using it immediately:
+
+```bash
+# 1. Load the package
+source package omnieff-0.0.1
+
+# 2. Create a working directory and assemblies directory
+mkdir my_effector_analysis
+cd my_effector_analysis
+mkdir assemblies
+
+# 3. Add your protein FASTA files to assemblies directory
+cp your_proteins.faa assemblies/assembly_name.faa
+
+# 4. Copy the configuration template
+cp $OMNIEFF_INSTALL_PREFIX/lib/config.yaml.template config.yaml
+
+# 5. Edit config.yaml with your settings
+nano config.yaml
+# Required: scratch, workdir, wckey
+# Optional: assemblies_dir (defaults to ./assemblies)
+
+# 6. Run the pipeline
+omnieff_run --config config.yaml
+```
+
+**Important**: Input files must be named `{assembly_name}.faa` (see Input File Preparation below).
+
+For system administrators wanting to install OmniEff, see [INSTALL.md](INSTALL.md).
+
+---
+
+## Overview
+
+The pipeline performs the following analyses:
+
+- **Signal peptide prediction**: SignalP3, SignalP4, SignalP5, SignalP6, Phobius
+- **Subcellular localization**: TargetP, TMHMM, LOCALIZER, ApoplastP
+- **Effector prediction**: EffectorP1, EffectorP2, EffectorP3 (fungal/non-fungal), DeepRedEff (fungi/oomycete)
+- **Domain analysis**: PFAM domain scanning
+- **Scoring and filtering**: Custom scoring algorithm to identify high-confidence effectors
+
+## Installation and Setup
+
+### Prerequisites
+
+1. **Snakemake** (version 9.3.0 or higher)
+2. **Singularity** for container support
+3. **SLURM** job scheduler
+4. **Python 3.12** with required packages
+
+### Setup
+
+1. Clone the repository:
+```bash
+git clone TeamMacLean/omnieff
+cd omnieff
+```
+
+2. Create the conda environment:
+```bash
+mamba env create -p ./snakemake_env -f lib/snakemake_env.yaml
+```
+
+3. Activate the environment:
+```bash
+source activate snakemake_env
+```
+
+## Configuration
+
+### Input File Preparation
+
+**CRITICAL**: The pipeline expects input files to be named with a specific pattern in the assemblies directory.
+
+#### File Naming Convention
+
+Your input protein FASTA files must be placed in the assemblies directory with the following naming pattern:
+```
+{assembly_name}.faa
+```
+
+**Examples:**
+
+- `canu.faa`
+- `flye.faa`
+- `spades.faa`
+
+**NOT:**
+
+- `canu_proteins.faa` ❌
+- `canu_proteins.fasta` ❌
+- `canu.fasta` ❌
+
+The `get_assemblies()` function in the workflow automatically detects assembly names by removing the `.faa` extension from files in the assemblies directory.
+
+### Configuration File
+
+Edit `lib/config.yaml` to set your parameters:
+
+```yaml
+# Working directory settings
+scratch: "/tsl/scratch/your_username"
+workdir: "your_project_name"
+
+# Input files directory
+assemblies_dir: "./assemblies"
+
+# Container settings
+singularity_image: "/tsl/data/singularity_images/predector/predector.sif"
+
+# SLURM settings
+wckey: "your_wckey"
+main_job_partition: "tsl-medium"
+
+# Profile directory for Snakemake
+profile_dir: "./profiles"
+```
+
+### Key Configuration Parameters
+
+- **scratch**: Base directory for all outputs
+- **workdir**: Project-specific subdirectory
+- **assemblies_dir**: Directory containing input `.faa` files (relative to where you run the command, or absolute path)
+- **singularity_image**: Path to the Singularity container - you can leave this as the default
+- **wckey**: SLURM wckey for job accounting
+- **main_job_partition**: SLURM partition for job submission
+- **profile_dir**: Directory containing Snakemake profiles
+
+## Usage
+
+### Installed Version (Recommended)
+
+If using the installed version on TSL HPC:
+
+```bash
+# Load the package
+source package omnieff-0.0.1
+
+# Run the pipeline
+omnieff_run --config config.yaml
+
+# Dry run (test without executing)
+omnieff_run --dry-run --config config.yaml
+
+# View version
+omnieff_run --version
+```
+
+### Development Version (From Git Repository)
+
+If running from a cloned repository:
+
+```bash
+# Run the complete pipeline
+python src/run_workflow.py --config lib/config.yaml
+
+# Dry run (test without executing)
+python src/run_workflow.py --dry-run
+```
+
+### Common Options
+
+The following options work with both `omnieff_run` (installed) and `python src/run_workflow.py` (development):
+
+**Dry run** (test without executing):
+```bash
+omnieff_run --dry-run --config config.yaml
+# OR
+python src/run_workflow.py --dry-run
+```
+
+**Run until a specific rule**:
+```bash
+python src/run_workflow.py --rule score_proteins
+```
+
+**Generate DAG visualization**:
+```bash
+python src/run_workflow.py --dag
+```
+
+**Unlock a locked directory**:
+```bash
+python src/run_workflow.py --unlock
+```
+
+**Debug mode**:
+```bash
+python src/run_workflow.py --debug
+```
+
+**Force run a rule**:
+```bash
+python src/run_workflow.py --rule score_proteins --force
+```
+
+## Output Structure
+
+The pipeline generates outputs in the following structure:
+```
+{scratch}/{workdir}/
+├── assemblies/           # Input FASTA files
+├── signalp3/            # SignalP3 results
+├── signalp4/            # SignalP4 results
+├── signalp5/            # SignalP5 results
+├── signalp6/            # SignalP6 results
+├── phobius/             # Phobius results
+├── targetp/             # TargetP results
+├── tmhmm/               # TMHMM results
+├── effectorp1/          # EffectorP1 results
+├── effectorp2/          # EffectorP2 results
+├── effectorp3/          # EffectorP3 results
+├── localizer/           # LOCALIZER results
+├── apoplastp/           # ApoplastP results
+├── deepredeff/          # DeepRedEff results
+├── pfam/                # PFAM domain results
+├── parsed/              # Parsed tool outputs
+├── scored/              # Scored proteins
+├── filtered/            # Final filtered effectors
+└── logs/                # Log files
+```
+
+### Key Output Files
+
+**Parsed Results** (`parsed/{assembly}_tool_results.csv`):
+Combined results from all prediction tools for each protein. Contains columns for each tool's predictions and scores.
+
+**Scored Results** (`scored/{assembly}_scored.csv`):
+Parsed results with added `custom_score` and `score_rank` columns based on the scoring algorithm.
+
+**Filtered Results** (`filtered/{assembly}_filtered.csv`):
+High-confidence effector candidates that passed filtering thresholds.
+
+**Filtered Sequences** (`filtered/{assembly}_filtered.fasta`):
+FASTA file containing only the filtered effector protein sequences.
+
+### Understanding Output Columns
+
+**RESULTS_MISSING**: This value appears in output files when a particular analysis was not performed or could not be completed. For example:
+- `signalp3_nn` and `signalp3_nn_d` are always `RESULTS_MISSING` because the pipeline only runs SignalP3 HMM method
+- Other fields may show `RESULTS_MISSING` if a tool failed or if the protein was not analyzed by that tool
+
+**NA**: Used for numeric fields where the value is not applicable or not available (e.g., EffectorP3 probabilities when a protein is predicted as non-effector).
+
+## Workflow Rules
+
+### Core Analysis Rules
+
+**Note on SignalP3**: The pipeline runs only SignalP3 HMM method. The Neural Network (NN) method is not executed, so `signalp3_nn` fields will show `RESULTS_MISSING` in the output files. This is expected behavior.
+
+- `run_signalp3_hmm`: Signal peptide prediction (HMM method only)
+- `run_signalp4`: Signal peptide prediction (v4)
+- `run_signalp5`: Signal peptide prediction (v5)
+- `run_signalp6`: Signal peptide prediction (v6)
+- `run_phobius`: Transmembrane topology prediction
+- `run_targetp`: Subcellular localization prediction
+- `run_tmhmm`: Transmembrane helix prediction
+- `run_effectorp1`: Effector prediction (v1)
+- `run_effectorp2`: Effector prediction (v2)
+- `run_effectorp3_fungal`: Effector prediction (v3, fungal)
+- `run_effectorp3_nonfungal`: Effector prediction (v3, non-fungal)
+- `run_localizer`: Subcellular localization
+- `run_apoplastp`: Apoplast localization prediction
+- `run_deepredeff_fungi`: Deep learning effector prediction (fungi)
+- `run_deepredeff_oomycete`: Deep learning effector prediction (oomycete)
+- `run_pfam_scan`: PFAM domain scanning
+
+### Processing Rules
+- `parse_tool_outputs`: Parse and combine all tool outputs
+- `score_proteins`: Apply scoring algorithm
+- `filter_proteins`: Filter high-confidence effectors
+- `extract_filtered_sequences`: Extract final effector sequences
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Missing input files**: Ensure your FASTA files are named correctly (`{assembly}.faa`)
+2. **Empty assemblies list**: Check that the assemblies directory exists and contains properly named files
+3. **SLURM job failures**: Verify your SLURM configuration and wckey settings
+4. **Container issues**: Ensure the Singularity container path is correct
+
+### Debug Mode
+
+Use debug mode to get detailed information:
+```bash
+python src/run_workflow.py --debug
+```
+
+This will provide verbose output and help identify issues in the workflow.
+
+## Dependencies
+
+The pipeline uses the Predector Singularity container which includes:
+- SignalP (v3, v4, v5, v6)
+- EffectorP (v1, v2, v3)
+- DeepRedEff
+- LOCALIZER
+- ApoplastP
+- TargetP
+- TMHMM
+- Phobius
+- HMMER (for PFAM scanning)
+
+## Citation
+
+If you use this pipeline in your research, please cite the original tools and this pipeline.
+
+## License
+
+Internal use only
+
+## Support
+
+For issues and questions, please open an issue on the repository or contact the TSL bioinformatics team. 
